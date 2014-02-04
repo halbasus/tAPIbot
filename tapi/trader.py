@@ -226,7 +226,7 @@ class trade(object):
             self.log.info('shortPosition %s' % self.shortPosition)
         else:
             fuckin_rate = rate*0.997
-            fuckin_rate = float(Decimal(str(fuckin_rate)).quantize(Decimal('.001'), rounding='ROUND_UP'))
+            fuckin_rate = float(Decimal(str(fuckin_rate)).quantize(Decimal('.001'), rounding='ROUND_DOWN'))
 	    order = self.placeOrder('buy',fuckin_rate,amount)
             self.log.info('Attempted buy: %s %s %s %s' % (pair,rate,fuckin_rate,amount))
             if order:
@@ -259,7 +259,7 @@ class trade(object):
         else:
             fuckin_rate = rate*1.003
             fuckin_rate = float(Decimal(str(fuckin_rate)).quantize(Decimal('.001'), rounding='ROUND_UP'))
-            order = self.placeOrder('sell',rate,amount)
+            order = self.placeOrder('sell',fuckin_rate,amount)
             self.log.info('Attempted sell: %s %s %s %s' % (pair,rate,fuckin_rate,amount))
             if order:
                 self.log.info('Order successfully placed')
