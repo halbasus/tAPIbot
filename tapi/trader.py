@@ -2,7 +2,7 @@ import helper
 import api
 import time
 import pylab
-
+from decimal import Decimal
 ##TODO:
 ##    develop oscillator (aroon?) and implement plotting
 ##    look at implementing n number ribbon lines
@@ -225,7 +225,8 @@ class trade(object):
             self.shortPosition = False
             self.log.info('shortPosition %s' % self.shortPosition)
         else:
-            fuckin_rate =  int(rate*(1-0.003)*100)/100   
+            fuckin_rate = rate*0.997
+            fuckin_rate = float(Decimal(str(fuckin_rate)).quantize(Decimal('.001'), rounding='ROUND_UP'))
 	    order = self.placeOrder('buy',fuckin_rate,amount)
             self.log.info('Attempted buy: %s %s %s %s' % (pair,rate,fuckin_rate,amount))
             if order:
@@ -256,7 +257,8 @@ class trade(object):
             self.shortPosition = True
             self.log.info('shortPosition %s' % self.shortPosition)
         else:
-	    fuckin_rate =  int(rate*(1+.003)*100)/100   
+            fuckin_rate = rate*1.003
+            fuckin_rate = float(Decimal(str(fuckin_rate)).quantize(Decimal('.001'), rounding='ROUND_UP'))
             order = self.placeOrder('sell',rate,amount)
             self.log.info('Attempted sell: %s %s %s %s' % (pair,rate,fuckin_rate,amount))
             if order:
